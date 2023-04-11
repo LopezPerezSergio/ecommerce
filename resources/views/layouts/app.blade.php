@@ -9,9 +9,11 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
+
+    {{-- styles --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.css">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -27,6 +29,8 @@
             document.documentElement.classList.remove('dark')
         }
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/glider-js@1/glider.min.js"></script>
     <!-- Styles -->
     @livewireStyles
 </head>
@@ -154,11 +158,10 @@
                     class="hover:underline">Flowbite™</a>. All Rights Reserved.</span>
         </div>
     </footer>
-    
+
     @stack('modals')
-
     @livewireScripts
-
+    
     <script>
         var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
@@ -202,6 +205,9 @@
 
         });
     </script>
+
+    @stack('script')
+
 </body>
 
 </html>
