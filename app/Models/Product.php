@@ -14,6 +14,12 @@ class Product extends Model
     
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    //url amigable
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
     /* Relacion uno a muchos*/
     public function sizes()
     {
@@ -34,7 +40,7 @@ class Product extends Model
     /* Relacion muchos a muchos */
     public function colors()
     {
-        return $this->belongsToMany(Color::class);
+        return $this->belongsToMany(Color::class)->withPivot('quantity');
     }
 
     /* Relacion uno a muchos polimorfica*/
