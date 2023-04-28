@@ -1,4 +1,4 @@
-<div class=" h-full">
+<div class="h-full">
     <div class="pt-12 lg:grid lg:grid-cols-4 lg:gap-x-8 xl:grid-cols-5">
         <aside>
             <h2 class="sr-only">Filters</h2>

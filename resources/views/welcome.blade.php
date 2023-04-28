@@ -100,8 +100,8 @@
                 </div>
             </div>
         </div>
-
     </section>
+    
 
     @push('script')
         <script>

@@ -1,16 +1,15 @@
 <div x-data class="mt-6">
     <!-- Product details -->
-    <div class="prose prose-sm mb-4 text-gray-500 dark:text-gray-400">
-        <p>Stock disponible: <span>{{ $stock }}</span></p>
+    <div class="prose prose-sm mb-3 mt-6 text-gray-700 dark:text-gray-400">
+        <p>Stock disponible: <span class="p-2 rounded-lg bg-gray-100  text-center">{{ $stock }}</span></p>
     </div>
 
     <div class="sm:flex-col1 flex">
         <div class="mr-4 max-w-xs">
             <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                disabled 
-                x-bind:disabled="$wire.quantity <= 1" 
-                wire:loading.atrr='disabled' 
+                class="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center @if ($stock > 0) text-white focus:ring-blue-300  bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 @else border border-b dark:text-white @endif"
+                disabled x-bind:disabled="$wire.quantity <= 1" 
+                wire:loading.attr='disabled' 
                 wire:target='decrement'
                 wire:click='decrement'>
 
@@ -25,9 +24,9 @@
             <span class="p-4 text-base font-medium dark:text-white">{{ $quantity }}</span>
 
             <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
-                x-bind:disabled="$wire.quantity >=  $wire.stock " 
-                wire:loading.atrr='disabled' 
+                class="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center @if ($stock > 0) text-white focus:ring-blue-300  bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 @else border border-b dark:text-white @endif"
+                x-bind:disabled="$wire.quantity >= $wire.stock" 
+                wire:loading.attr='disabled' 
                 wire:target='increment'
                 wire:click='increment'>
 
@@ -41,8 +40,11 @@
             </button>
         </div>
 
-        <button type="submit"
-            class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-gray-100 py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+        <button class="flex max-w-xs flex-1 items-center justify-center rounded-md border py-3 px-8 text-base font-medium text-gray-900 dark:text-white @if ($stock > 0) border-transparent bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 @else border-b @endif"
+            wire:click='addItem'
+            wire:loading.attr='disabled'
+            wire:target='addItem'
+            x-bind:disabled="!$wire.stock">
             Agregar
         </button>
     </div>

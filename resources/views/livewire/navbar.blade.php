@@ -2,7 +2,7 @@
     <div class="container flex flex-wrap items-center justify-between mx-auto">
         {{-- Logotipo --}}
         <a href="/" class="flex items-center">
-            <img src="https://play-lh.googleusercontent.com/xQ28HFiHH0An_TxO7qwydiu0ZMcs5fQzHCMdeo7Ux9tjDfXgw74j2LhxPTunWlRJ0A=w600-h300-pc0xffffff-pd"
+            <img src="https://www.freepnglogos.com/uploads/s-letter-logo-png-19.png"
                 class="h-6 mr-3 sm:h-9" alt="Logo" />
             <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Ecommerce</span>
         </a>

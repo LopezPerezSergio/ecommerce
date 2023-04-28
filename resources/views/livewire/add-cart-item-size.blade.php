@@ -13,25 +13,22 @@
                     Checked: "bg-indigo-600 border-transparent text-white hover:bg-indigo-700", Not Checked: "bg-white border-gray-200 text-gray-900 hover:bg-gray-50"
                 -->
                 @foreach ($sizes as $size)
-                    <label
-                        class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 cursor-pointer focus:outline-none">
-                        <input wire:model='size_id' type="radio" name="size-choice" value="{{ $size->id }}"
-                            class="sr-only" aria-labelledby="size-choice-{{ $size->id }}-label">
-                        <span id="size-choice-{{ $size->id }}-label">{{ $size->name }}</span>
-                    </label>
+                    @if ($size_id == $size->id)
+                        <label
+                            class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 opacity-50 cursor-not-allowed">
+                            <input type="radio" name="size-choice" value="{{ $size->id }}" disabled
+                                class="sr-only" aria-labelledby="size-choice-{{ $size->id }}-label">
+                            <span id="size-choice-{{ $size->id }}-label">{{ $size->name }}</span>
+                        </label>
+                    @else
+                        <label
+                            class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 cursor-pointer focus:outline-none">
+                            <input wire:model='size_id' type="radio" name="size-choice" value="{{ $size->id }}"
+                                class="sr-only" aria-labelledby="size-choice-{{ $size->id }}-label">
+                            <span id="size-choice-{{ $size->id }}-label">{{ $size->name }}</span>
+                        </label>
+                    @endif
                 @endforeach
-
-                <!--
-            In Stock: "cursor-pointer", Out of Stock: "opacity-25 cursor-not-allowed"
-            Active: "ring-2 ring-offset-2 ring-indigo-500"
-            Checked: "bg-indigo-600 border-transparent text-white hover:bg-indigo-700", Not Checked: "bg-white border-gray-200 text-gray-900 hover:bg-gray-50"
-            -->
-                <label
-                    class="border rounded-md py-3 px-3 flex items-center justify-center text-sm font-medium uppercase sm:flex-1 opacity-25 cursor-not-allowed">
-                    <input type="radio" name="size-choice" value="XL" disabled class="sr-only"
-                        aria-labelledby="size-choice-5-label">
-                    <span id="size-choice-5-label">XL</span>
-                </label>
             </div>
         </fieldset>
     </div>
@@ -76,14 +73,16 @@
 
     <!-- Product details -->
     <div class="prose prose-sm mb-3 mt-6 text-gray-700 dark:text-gray-400">
-        <p>Stock disponible: <span class="p-2 rounded-lg bg-gray-100  text-center">{{ $stock !== 0  ? $stock :'Seleccione un color' ; }}</span></p>
+        <p>Stock disponible: <span
+                class="p-2 rounded-lg bg-gray-100  text-center">{{ $stock !== 0 ? $stock : 'Seleccione un color' }}</span>
+        </p>
     </div>
 
     <div class="sm:flex-col1 flex">
         <div class="mr-4 max-w-xs">
             <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                disabled x-bind:disabled="$wire.quantity <= 1" wire:loading.atrr='disabled' wire:target='decrement'
+                class="focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center @if ($stock > 0) text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 @else border border-b text-gray-400 dark:text-white @endif"
+                disabled x-bind:disabled="$wire.quantity <= 1" wire:loading.attr='disabled' wire:target='decrement'
                 wire:click='decrement'>
 
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -97,8 +96,8 @@
             <span class="p-4 text-base font-medium dark:text-white">{{ $quantity }}</span>
 
             <button type="button"
-                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                x-bind:disabled="$wire.quantity >= $wire.stock" wire:loading.atrr='disabled' wire:target='increment'
+                class="focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2 m-2 text-center inline-flex items-center @if ($stock > 0) text-white bg-blue-700 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 @else border border-b text-gray-400 dark:text-white @endif"
+                x-bind:disabled="$wire.quantity >= $wire.stock" wire:loading.attr='disabled' wire:target='increment'
                 wire:click='increment'>
 
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
@@ -111,9 +110,9 @@
             </button>
         </div>
 
-        <button type="submit"
-            class="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-gray-100 py-3 px-8 text-base font-medium text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-            x-bind:disabled="!$wire.stock">
+        <button
+            class="flex max-w-xs flex-1 items-center justify-center rounded-md border py-3 px-8 text-base font-medium dark:text-white @if ($stock > 0) border-transparent text-gray-900 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 @else border-b text-gray-400 @endif"
+            wire:click='addItem' wire:loading.attr='disabled' wire:target='addItem' x-bind:disabled="!$wire.stock">
             Agregar
         </button>
     </div>
