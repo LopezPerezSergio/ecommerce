@@ -10,7 +10,7 @@ class WelcomeController extends Controller
     public function __invoke()
     {
         $categories = Category::all();
-        //$categories = $categories->take(3);
+        $categories = $categories->take(3);
 
         return view('welcome', compact('categories'));
     }
