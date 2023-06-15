@@ -12,11 +12,15 @@ class AddCartItem extends Component
     public $quantity = 1;
     public $stock;
 
-    public $options = [];
+    public $options = [
+        'color_id' => null,
+        'size_id' => null
+    ];
 
     public function mount()
     {
-        $this->stock = $this->product->quantity;
+        //$this->stock = $this->product->quantity;
+        $this->stock = quantity_available($this->product->id);
         $this->options['image'] = Storage::url($this->product->images->first()->url);
     }
     
@@ -43,6 +47,10 @@ class AddCartItem extends Component
                     'price' => $this->product->price,
                     'options' => $this->options]
                 );
+
+        $this->stock = quantity_available($this->product->id);
+
+        $this->reset('quantity');
 
         $this->emitTo('drawer-cart','render');
     }

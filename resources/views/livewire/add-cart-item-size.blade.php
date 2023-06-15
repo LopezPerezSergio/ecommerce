@@ -74,7 +74,7 @@
     <!-- Product details -->
     <div class="prose prose-sm mb-3 mt-6 text-gray-700 dark:text-gray-400">
         <p>Stock disponible: <span
-                class="p-2 rounded-lg bg-gray-100  text-center">{{ $stock !== 0 ? $stock : 'Seleccione un color' }}</span>
+                class="p-2 rounded-lg bg-gray-100  text-center">{{ $stock !== 0 ? $stock : ($stock == 0 ? 0 : 'Seleccione un color') }}</span>
         </p>
     </div>
 
